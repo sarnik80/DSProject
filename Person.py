@@ -2,6 +2,7 @@ import enum
 
 
 class Gender(enum.Enum):
+    """a class for define gender of every person"""
     Male = 0
     Female = 1
 
@@ -10,33 +11,33 @@ class Person:
     # docstring
     """This is a person class"""
 
-    def __init__(self, name='', iD=None, gender=Gender.Male.value, is_married=False, id_spouse=None, parent='0'):
+    def __init__(self, name='', iD=None, gender=Gender.Male.value, id_spouse=None, parent='0', level=0):
         self.__name = name,
         self.__i_d = iD,
         self.__gender = gender,
-        self.__is_married = is_married,
         self.__id_spouse = id_spouse,
         self.__parent = parent
+        self.__level = level
 
     def data(self):
         return {"name": self.__name,
                 "_id": self.__i_d,
                 "gender": self.__gender,
-                "is_married": self.__is_married,
                 "id_spouse": self.__id_spouse,
-                "id_parent": self.id_parent
+                "id_parent": self.id_parent,
+                'level': self.__level
                 }
 
     @property
-    def is_married(self):
-        return self.__is_married
+    def level(self):
+        return self.__level
 
-    @is_married.setter
-    def is_married(self, is_marr):
-        if isinstance(is_marr, bool):
-            self.__is_married = is_marr
+    @level.setter
+    def level(self, lvl):
+        if not isinstance(lvl, int):
+            raise TypeError(f'Expecting an integer, got {type(lvl)}.')
         else:
-            raise TypeError(f'Expecting an boolean value, got {type(is_marr)}.')
+            self.__level = lvl
 
     @property
     def gender(self):
