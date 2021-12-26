@@ -1,17 +1,10 @@
 import enum
 
-
-class Gender(enum.Enum):
-    """a class for define gender of every person"""
-    Male = 0
-    Female = 1
-
-
 class Person:
     # docstring
     """This is a person class"""
 
-    def __init__(self, name='', iD=None, gender=Gender.Male.value, id_spouse=None, parent='0', level=0):
+    def __init__(self, name='', iD=None, gender=0, id_spouse=None, parent='0', level=0):
         self.__name = name,
         self.__i_d = iD,
         self.__gender = gender,
@@ -21,7 +14,7 @@ class Person:
 
     def data(self):
         return {"name": self.__name,
-                "_id": self.__i_d,
+                "id_user": self.__i_d,
                 "gender": self.__gender,
                 "id_spouse": self.__id_spouse,
                 "id_parent": self.id_parent,
@@ -45,12 +38,11 @@ class Person:
 
     @gender.setter
     def gender(self, type_p):
-        if isinstance(type_p, int):
-            self.__gender = Gender(type_p)
-        elif isinstance(type_p, Gender):
-            self.__gender = type_p
+        if not isinstance(type_p, int):
+            raise TypeError(f'Expecting an integer, got {type(type_p)}.')
         else:
-            raise TypeError(f'Expecting an {type(Gender)} or integer, got {type(type_p)}.')
+            self.__gender = type_p
+
 
     @property
     def name(self):
